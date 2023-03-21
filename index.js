@@ -1,7 +1,8 @@
-// function mdLinks(path, {option}){
-//   console.log('o')
-// }
+const mdLinks = (path, option) => {
+  console.log('hola')
+}
 
-// module.exports = () => {
-//   mdLinks()
-// }
+// aquí es donde voy aceptando o rechazando la promesa 
+
+module.exports = mdLinks()
+
