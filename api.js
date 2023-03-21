@@ -11,7 +11,20 @@ const toAbsolute = (rel) => path.join(__dirname, rel) //convertir a absoluta
 console.log(toAbsolute('mdLinks.md')) 
 
 const pathExtension = (mdPath) => path.extname(mdPath) //obteniendo la extención del archivo
-console.log(pathExtension('README.md'))
+console.log(pathExtension('mdLinks.md'))
 
-// const readFile = (mdPath) => fs.readFile(mdPath, 'utf-8', cb)
-// console.log(readFile('README.md'))
+const readFile = (mdPath) => {
+    return new Promise((resolve, reject) => {
+        fs.readFile(mdPath, 'utf-8', (err, data) => { // leyendo el archivo asíncronamente
+            err ? reject(err) : resolve(data)
+        })
+    })
+}
+
+module.exports = {
+    pathExistence,
+    absOrRel,
+    toAbsolute,
+    pathExtension,
+    readFile
+}
