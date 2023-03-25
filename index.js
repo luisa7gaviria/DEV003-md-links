@@ -1,9 +1,9 @@
-const {readFile} = require('./api')
+const {readFile, getFileLinks} = require('./api')
 
 const mdLinks = (path, option) => {
   readFile(path).then((filedata) => {
-    console.log(filedata)
-  })
+   filedata
+  }).catch(error => console.log(error))
 }
 
 // aquí es donde voy aceptando o rechazando la promesa 
