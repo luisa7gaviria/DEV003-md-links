@@ -8,7 +8,11 @@ const absOrRel = (mdPath) => path.isAbsolute(mdPath); //es absoluta?, si no, tra
 
 const toAbsolute = (relPath) => path.resolve(relPath); //convertir a absoluta 
 
-const pathExtension = (mdPath) => path.extname(mdPath); //obteniendo la extención del archivo
+const pathExtension = (mdPath) => {     //obteniendo la extensión del archivo
+    if (path.extname(mdPath) === '.md') {
+        return mdPath
+    }
+}; 
 
 const readFile = (mdPath) => {
     return new Promise((resolve, reject) => {
@@ -23,7 +27,7 @@ const getFileLinks = (fileContent) => { // extrayendo links
         const regLink = /\[(.*?)\]\((.*?)\)/g;
         let result 
         const arrayLinks = []
-        while (result= regLink.exec(fileContent)) {
+        while (result = regLink.exec(fileContent)) {
             const fileLinks = result[2]
             arrayLinks.push(fileLinks)
             resolve(arrayLinks)
@@ -34,15 +38,25 @@ const getFileLinks = (fileContent) => { // extrayendo links
     })
 };
 
-const statusRequest = (link) => {
-    return new Promise((resolve) => {
-        resolve(axios.get(link)) 
-    });
+const statusRequest = (link) => {   //consulta http a AXIOS
+    return axios.get(link)
+    .then(res => [res.status, res.statusText])
+    .catch(err => !err.response ? [-1, 'Not Found'] : [err.response.status, err.response.statusText])
 } 
 
-// grupo href=url
-// text
-// ruta del archivo
+const askingDuplicates = (arrayLink) => {   //Buscando links repetidos- Funcion Stats
+    const busqueda = arrayLink.reduce((acc, property) => {
+        acc[property.url] = ++acc[property.url] || 0;
+        return acc;
+    }, {})
+    const duplicados = arrayLink.filter((property) => {
+        return busqueda[property.url];
+    });
+  return {
+    Total: arrayLink.length,
+    Unique: arrayLink.length - duplicados.length
+  }
+};
 
 module.exports = {
     pathExistence,
@@ -51,5 +65,5 @@ module.exports = {
     pathExtension,
     readFile, 
     getFileLinks,
-    statusRequest
+    
 }

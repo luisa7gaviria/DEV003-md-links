@@ -1,5 +1,5 @@
 const func = require('../api');
-jest.mock('axios')
+
 
 describe('Testing pathExistence function', () => {
 

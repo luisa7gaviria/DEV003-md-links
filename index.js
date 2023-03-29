@@ -1,11 +1,18 @@
-const {readFile, getFileLinks} = require('./api')
+const {pathExistence, absOrRel, toAbsolute, pathExtension, readFile} = require('./api')
 
 const mdLinks = (path, option) => {
-  readFile(path).then((filedata) => {
-   filedata
-  }).catch(error => console.log(error))
+  return new Promise((resolve, reject) => {
+    if (!pathExistence(path)) {
+      reject('Path does not exists')
+    } else if (pathExistence(path)){
+      resolve(path)
+    }
+  })
+  
 }
 
 // aquí es donde voy aceptando o rechazando la promesa 
 mdLinks('mdLinks.md')
+.then(data => console.log(data))
+.catch(err => console.log(err))
 module.exports = mdLinks
