@@ -2,13 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const axios = require('axios')
 
-const pathExistence = (mdPath) => fs.existsSync(mdPath); //existencia de la ruta
+const pathExistence = (mdPath) => fs.existsSync(mdPath); 
 
-const absOrRel = (mdPath) => path.isAbsolute(mdPath); //es absoluta?, si no, transformar
+const absOrRel = (mdPath) => !path.isAbsolute(mdPath) ? path.normalize(path.resolve(mdPath)) : mdPath
 
-const toAbsolute = (relPath) => path.resolve(relPath); //convertir a absoluta 
-
-const pathExtension = (mdPath) => {     //obteniendo la extensión del archivo
+const pathExtension = (mdPath) => {     
     if (path.extname(mdPath) === '.md') {
         return mdPath
     }
@@ -16,21 +14,24 @@ const pathExtension = (mdPath) => {     //obteniendo la extensión del archivo
 
 const readFile = (mdPath) => {
     return new Promise((resolve, reject) => {
-        fs.readFile(mdPath, 'utf-8', (err, data) => { // leyendo el archivo asíncronamente
+        fs.readFile(mdPath, 'utf-8', (err, data) => { 
         data === '' ? reject(err = 'No content to read') : resolve(data);
         });
     });
 };
 
-const getFileLinks = (fileContent) => { // extrayendo links 
+const getFileLinks = (fileContent, mdPath) => { 
     return new Promise((resolve, reject) => {
-        const regLink = /\[(.*?)\]\((.*?)\)/g;
+        const regLink = /\[(.*?)\]\((.*?)\)/g; 
         let result 
-        const arrayLinks = []
+        const linkAr = []
         while (result = regLink.exec(fileContent)) {
-            const fileLinks = result[2]
-            arrayLinks.push(fileLinks)
-            resolve(arrayLinks)
+            linkAr.push({
+                file: mdPath,
+                text: result[1],
+                href: result[2]
+            })
+            resolve(linkAr)
         };
         if (regLink.exec(fileContent) === null ) {
             reject('This file does not contain links')
@@ -38,32 +39,35 @@ const getFileLinks = (fileContent) => { // extrayendo links
     })
 };
 
-const statusRequest = (link) => {   //consulta http a AXIOS
+const statusRequest = (link) => {  // debo devolver los 5 datos de ese file
     return axios.get(link)
-    .then(res => [res.status, res.statusText])
-    .catch(err => !err.response ? [-1, 'Not Found'] : [err.response.status, err.response.statusText])
+    .then(res => {
+        return {
+         Status: res.status, 
+         StatusMessage: res.statusText
+        }
+    })
+    .catch(err => !err.response ? {Status: -1, StatusMessage: 'Not Found'} : {Status: err.response.status, StatusMessage: err.response.statusText})
 } 
 
-const askingDuplicates = (arrayLink) => {   //Buscando links repetidos- Funcion Stats
-    const busqueda = arrayLink.reduce((acc, property) => {
-        acc[property.url] = ++acc[property.url] || 0;
-        return acc;
-    }, {})
-    const duplicados = arrayLink.filter((property) => {
-        return busqueda[property.url];
-    });
-  return {
-    Total: arrayLink.length,
-    Unique: arrayLink.length - duplicados.length
-  }
+const statsArrLinks = (arrayLink, key) => { 
+
+    const property = arrayLink.map(obj => obj[key])
+    const duplicated = property.filter((urls, index) => {
+        return property.indexOf(urls) !== index
+    })
+    return {
+        Total: arrayLink.length,
+        Unique: arrayLink.length - duplicated.length
+    
+    }
 };
 
 module.exports = {
     pathExistence,
     absOrRel,
-    toAbsolute,
     pathExtension,
-    readFile, 
+    readFile,
     getFileLinks,
-    
+    statsArrLinks
 }

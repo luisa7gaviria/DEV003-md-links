@@ -1,18 +1,33 @@
-const {pathExistence, absOrRel, toAbsolute, pathExtension, readFile} = require('./api')
+const {pathExistence, absOrRel, pathExtension, readFile, getFileLinks} = require('./api')
 
 const mdLinks = (path, option) => {
   return new Promise((resolve, reject) => {
     if (!pathExistence(path)) {
+
       reject('Path does not exists')
+
     } else if (pathExistence(path)){
-      resolve(path)
+
+      if (!pathExtension(absOrRel(path))) {
+        reject('File is not type markdown')
+
+      } else {
+        
+        readFile(absOrRel(path))
+        .then(fileText => {
+
+          getFileLinks(fileText, absOrRel(path))
+          .then(links => resolve(links))
+          .catch(nolink => reject(nolink))
+        })
+        .catch(noContent => reject(noContent))
+      }
     }
   })
   
 }
 
-// aquí es donde voy aceptando o rechazando la promesa 
 mdLinks('mdLinks.md')
-.then(data => console.log(data))
-.catch(err => console.log(err))
+.then(data => data) // lo que resuelvo => arreglos con 3 o 5 datos
+.catch(err => err) // lo que rechazo => cosas que pueden rechazar el procedimiento
 module.exports = mdLinks

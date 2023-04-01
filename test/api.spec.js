@@ -18,42 +18,27 @@ describe('Testing pathExistence function', () => {
   
 describe('Testing absOrRel function', () => {
 
-  it('should return true if path is absolute', () => {
-    expect(func.absOrRel('C:\\Users\\Marce\\Projects\\index.js')).toEqual(true)
+  it('should return path if its absolute', () => {
+    expect(func.absOrRel('C:\\Users\\Marce\\Projects\\index.js')).toEqual('C:\\Users\\Marce\\Projects\\index.js')
   });
   
-  it('should return false if path is relative', () => {
-    expect(func.absOrRel('anFile.js')).toEqual(false)
+  it('should return absolute path if path is relative', () => {
+    expect(func.absOrRel('anFile.js')).toEqual('C:\\Users\\Loren\\DEV003-md-links\\anFile.js')
   });
-
-  it('should return false if path is empty', () => {
-    expect(func.absOrRel('')).toEqual(false)
-  });
-});
-
-describe('Testing toAbsolute function', () => {
-
-  it('should convert the relative path to absolute path', () => {
-    expect(func.toAbsolute('thisFile.js')).toEqual('C:\\Users\\Loren\\DEV003-md-links\\thisFile.js')
-  });
-
-  // it('should throw an error if there isnt a path to convert', () => {
-  //   expect(func.toAbsolute()).toReturn('ERR_INVALID-ARG-TYPE')
-  // });
 });
 
 describe('Testing pathExtension function', () => {
 
   it('should return file extension .json', () => {
-    expect(func.pathExtension('testFile.json')).toBe('.json')
+    expect(func.pathExtension('testFile.json')).toBe(undefined)
   });
 
   it('should return file extension .md', () => {
-    expect(func.pathExtension('testFile.md')).toBe('.md')
+    expect(func.pathExtension('testFile.md')).toBe('testFile.md')
   });
 
   it('should return nothing when there isnt a file ', () => {
-    expect(func.pathExtension('')).toBe('')
+    expect(func.pathExtension('')).toBe(undefined)
   });
 });
 
@@ -80,3 +65,11 @@ describe('Testing getFileLinks function', () => {
     });
   });
 });
+
+describe('Testing statsArrLinks function', () => {
+  const objectTest = [{name: 'joseph', age: 22}, {name: 'mary', age: 22},{name: 'esther', age: 22}]
+
+  it('should return total of ages in the array and ages that are unique', () => {
+    expect(func.statsArrLinks(objectTest, 'age')).toEqual({Total:3, Unique:1})
+  });
+})
