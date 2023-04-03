@@ -15,10 +15,10 @@ const mdLinks = (path, option) => {
         
         readFile(absOrRel(path))
         .then(fileText => {
-
-          getFileLinks(fileText, absOrRel(path))
-          .then(links => resolve(links))
-          .catch(nolink => reject(nolink))
+          
+           getFileLinks(fileText, absOrRel(path))
+           .then(links => resolve(links))
+           .catch(nolink => reject(nolink))
         })
         .catch(noContent => reject(noContent))
       }
@@ -28,6 +28,6 @@ const mdLinks = (path, option) => {
 }
 
 mdLinks('mdLinks.md')
-.then(data => data) // lo que resuelvo => arreglos con 3 o 5 datos
-.catch(err => err) // lo que rechazo => cosas que pueden rechazar el procedimiento
+.then(console.log) // lo que resuelvo => arreglos con 3 o 5 datos
+.catch(console.log) // lo que rechazo => cosas que pueden rechazar el procedimiento
 module.exports = mdLinks

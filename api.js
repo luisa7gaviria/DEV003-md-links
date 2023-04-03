@@ -50,6 +50,12 @@ const statusRequest = (link) => {  // debo devolver los 5 datos de ese file
     .catch(err => !err.response ? {Status: -1, StatusMessage: 'Not Found'} : {Status: err.response.status, StatusMessage: err.response.statusText})
 } 
 
+// readFile('mdLinks.md').then(result => {
+//     getFileLinks(result, 'mdLinks.md').then(x => {
+//         console.log(x)
+//     }).catch(err => console.log(err))
+// }).catch(err => console.log(err))
+
 const statsArrLinks = (arrayLink, key) => { 
 
     const property = arrayLink.map(obj => obj[key])

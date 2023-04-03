@@ -6,4 +6,4 @@ Un poco de texto
 link
 [Pa github de nuevo](https://docs.github.com/es/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/managing-your-profile-readme)
 link
-[json users](https://jsonplaceholder.typicode.com/users)
+[json users](https://jsonplaceholder.typicode.com/usrs)

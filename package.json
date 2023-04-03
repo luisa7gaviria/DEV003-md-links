@@ -1,6 +1,14 @@
 {
-  "name": "luisagav",
+  "name": "@luigaviria/md-links",
   "version": "0.1.0",
+  "description": "Extractor de links de archivos tipo Markdown",
+  "main": "index.js",
+  "keywords": [
+    "javascript",
+    "nodejs",
+    "jest",
+    "Markdown"
+  ],
   "type": "commonjs",
   "engines": {
     "node": ">=16.x"
@@ -10,8 +18,6 @@
     "version": "5.5.0",
     "commit": "a63a770ea33332882790401851df337734b0b734"
   },
-  "description": "Extractor de links de archivos Markdown",
-  "main": "index.js",
   "directories": {
     "test": "test"
   },
@@ -22,14 +28,18 @@
     "type": "git",
     "url": "git+https://github.com/luisa7gaviria/DEV003-md-links.git"
   },
-  "author": "\"Luisa-gaviria\"",
+  "author": "\"Luisa Gaviria\"",
+  "homepage": "https://github.com/luisa7gaviria/DEV003-md-links#readme",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/luisa7gaviria/DEV003-md-links/issues"
   },
-  "homepage": "https://github.com/luisa7gaviria/DEV003-md-links#readme",
+    "bin": {
+      "lu-mdLinks": "./cli.js"
+    },
   "dependencies": {
-    "axios": "^1.3.4"
+    "axios": "^1.3.4",
+    "colors": "^1.4.0"
   },
   "devDependencies": {
     "eslint": "^8.36.0",
