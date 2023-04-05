@@ -24,10 +24,6 @@ const mdLinks = (path, option) => {
       }
     }
   })
-  
 }
 
-mdLinks('mdLinks.md')
-.then(console.log) // lo que resuelvo => arreglos con 3 o 5 datos
-.catch(console.log) // lo que rechazo => cosas que pueden rechazar el procedimiento
 module.exports = mdLinks

@@ -39,22 +39,42 @@ const getFileLinks = (fileContent, mdPath) => {
     })
 };
 
-const statusRequest = (link) => {  // debo devolver los 5 datos de ese file
-    return axios.get(link)
-    .then(res => {
-        return {
-         Status: res.status, 
-         StatusMessage: res.statusText
-        }
-    })
-    .catch(err => !err.response ? {Status: -1, StatusMessage: 'Not Found'} : {Status: err.response.status, StatusMessage: err.response.statusText})
-} 
-
-// readFile('mdLinks.md').then(result => {
-//     getFileLinks(result, 'mdLinks.md').then(x => {
-//         console.log(x)
-//     }).catch(err => console.log(err))
-// }).catch(err => console.log(err))
+const statusRequest = (Arrlink) => {    
+   
+    const resultLinks = Arrlink.map(element => {
+       return axios.get(element.href)
+        .then(res => {
+          return {
+            file: element.file,
+            text: element.text,
+            href :element.href,
+            status : res.status, 
+            mensaje : res.statusText
+            };
+        })
+        .catch(err => {
+            if (!err.response) {
+              return {
+                file: element.file,
+                text: element.text,
+                href :element.href,
+                status : -1, 
+                mensaje : 'Not Found'
+            }
+            } else {
+            return {
+                file: element.file,
+                text: element.text,
+                href :element.href,
+                status : err.response.status, 
+                mensaje : err.response.statusText
+            }
+            
+            }
+        })
+      })
+  return Promise.all(resultLinks)
+}
 
 const statsArrLinks = (arrayLink, key) => { 
 
@@ -65,7 +85,6 @@ const statsArrLinks = (arrayLink, key) => {
     return {
         Total: arrayLink.length,
         Unique: arrayLink.length - duplicated.length
-    
     }
 };
 
@@ -75,5 +94,6 @@ module.exports = {
     pathExtension,
     readFile,
     getFileLinks,
-    statsArrLinks
+    statsArrLinks,
+    statusRequest
 }
