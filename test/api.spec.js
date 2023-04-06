@@ -53,11 +53,22 @@ describe('Testing readFile function', () => {
   it('should return error message if file is empty', async () => {
     await func.readFile('random.md').catch(err => {
       expect(err).toBe('No content to read')
-    })
-  })
+    });
+  });
 });
 
 describe('Testing getFileLinks function', () => {
+
+  it('should resolve an array of objects with text, file and link', async () => {
+    await func.getFileLinks('Hi, [link test](https://jsonplaceholder.typicode.com)', 'C:\\Users\\Loren\\DEV003-md-links\\anypath.md')
+    .then(data => {
+      expect(data).toEqual([{
+        file: 'C:\\Users\\Loren\\DEV003-md-links\\anypath.md',
+        text: 'link test',
+        href: 'https://jsonplaceholder.typicode.com'
+      }]);
+    });
+  });
 
   it('should return error when file does not have links', async () => {
     await func.getFileLinks('an file content').catch(err => {
@@ -66,10 +77,18 @@ describe('Testing getFileLinks function', () => {
   });
 });
 
+describe('Testing statusRequest function', () => {
+  
+})
+
 describe('Testing statsArrLinks function', () => {
-  const objectTest = [{name: 'joseph', age: 22}, {name: 'mary', age: 22},{name: 'esther', age: 22}]
+  const objectTest = [{name: 'joseph', age: 22, status: 404}, {name: 'mary', age: 22},{name: 'esther', age: 22}]
+
+  it('should return stats with broken property', () => {
+    expect(func.statsArrLinks(objectTest, 'name', true)).toEqual({Total:3, Unique:3, Broken:1})
+  });
 
   it('should return total of ages in the array and ages that are unique', () => {
     expect(func.statsArrLinks(objectTest, 'age')).toEqual({Total:3, Unique:1})
   });
-})
+});
