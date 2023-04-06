@@ -39,7 +39,7 @@ const getFileLinks = (fileContent, mdPath) => {
     })
 };
 
-const statusRequest = (Arrlink) => {    
+const statusRequest = (Arrlink) => {     
    
     const resultLinks = Arrlink.map(element => {
        return axios.get(element.href)
@@ -76,15 +76,23 @@ const statusRequest = (Arrlink) => {
   return Promise.all(resultLinks)
 }
 
-const statsArrLinks = (arrayLink, key) => { 
-
+const statsArrLinks = (arrayLink, key, stats) => { 
+    
     const property = arrayLink.map(obj => obj[key])
-    const duplicated = property.filter((urls, index) => {
-        return property.indexOf(urls) !== index
-    })
-    return {
-        Total: arrayLink.length,
-        Unique: arrayLink.length - duplicated.length
+    const duplicated = property.filter((urls, index) =>  property.indexOf(urls) !== index)
+
+    if (stats == true) {
+        const broken = arrayLink.filter(linkst => linkst.status === 404 || linkst.status === -1)
+        return {
+          Total: arrayLink.length,
+          Unique: arrayLink.length - duplicated.length,
+          Broken: broken.length
+        }
+    } else {
+        return {
+          Total: arrayLink.length,
+          Unique: arrayLink.length - duplicated.length
+        }
     }
 };
 
