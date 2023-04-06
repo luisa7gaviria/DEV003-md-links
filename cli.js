@@ -17,7 +17,11 @@ colors.setTheme({
 
 // comando de ayuda
 function help(){
-    console.log(' * A mdLinks guide:'.mdGuide)
+    console.log(' ---------------------------------->\n')
+    console.log(' * A guide to mdLinks:'.mdGuide)
+    console.log(' > If you want to see basic info about a file, type: ' +  'Your file name'.bgMagenta.white)
+    console.log('')
+    console.log('')
 
 }
 
