@@ -77,10 +77,6 @@ describe('Testing getFileLinks function', () => {
   });
 });
 
-describe('Testing statusRequest function', () => {
-  
-})
-
 describe('Testing statsArrLinks function', () => {
   const objectTest = [{name: 'joseph', age: 22, status: 404}, {name: 'mary', age: 22},{name: 'esther', age: 22}]
 
