@@ -9,7 +9,7 @@ const thrOption = process.argv[4]
 
 colors.setTheme({
     error: ['yellow', 'underline'],
-    mdError: ['brightCyan', 'italic'],
+    mdOut: ['brightRed', 'bold'],
     mdGuide: ['inverse','underline','italic'],
     mdPath: ['cyan','underline'],
     mdCommand: ['brightGreen', 'bold']
@@ -33,7 +33,7 @@ function cli() {
         .then(res => {
            const statsValidated = statsArrLinks(res, 'href', true)
            console.log('\n---------------------------------->'.yellow)
-           console.log(` Stats from ${firOption} \n`.mdPath)
+           console.log(` Validation stats from ${firOption} \n`.mdOut)
            console.log(` Total: ${statsValidated.Total}`)
            console.log(` Unique: ${statsValidated.Unique}`)
            console.log(` Broken: ${statsValidated.Broken}\n`)
@@ -52,16 +52,13 @@ function cli() {
         .then(res => {
             const stats = statsArrLinks(res, 'href', true)
             console.log('\n---------------------------------->'.yellow)
-            console.log(` Stats from ${firOption} \n`.mdPath)
+            console.log(` Stats from ${firOption} \n`.mdOut)
             console.log(` Total: ${stats.Total}`)
             console.log(` Unique: ${stats.Unique}\n`)
          })
         .catch(err => console.log(`${err}`.error))
 
-    } else if (firOption === undefined) {
-        help()
-
-    } else if (firOption === '--help') {
+    }  else if (firOption === '--help') {
         help()
 
     } else {
