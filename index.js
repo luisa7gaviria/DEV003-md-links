@@ -40,6 +40,12 @@ const mdLinks = (path, option, stats) => {
             resolve(statsArrLinks(links, 'href'))
            })
            .catch(nolink => reject(nolink))
+
+          } else {
+            getFileLinks(fileText, absOrRel(path))
+
+            .then(links => resolve(links))
+            .catch(nolink => reject(nolink))
           }
 
         })
@@ -48,5 +54,5 @@ const mdLinks = (path, option, stats) => {
     }
   })
 }
-mdLinks('mdLinks.md', {validate: true}).then(console.log).catch(console.log)
+
 module.exports = mdLinks
