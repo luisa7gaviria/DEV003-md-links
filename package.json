@@ -22,7 +22,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "start": "node cli.js"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,7 @@
   "bugs": {
     "url": "https://github.com/luisa7gaviria/DEV003-md-links/issues"
   },
+  "preferGlobal": true,
   "bin": {
     "lu-mdLinks": "./cli.js"
   },
