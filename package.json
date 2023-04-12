@@ -2,12 +2,14 @@
   "name": "lu-md-links",
   "version": "1.0.0",
   "description": "Extractor de links de archivos tipo Markdown",
-  "main": "cli.js",
+  "main": "./index.js",
   "keywords": [
     "javascript",
     "nodejs",
     "jest",
-    "Markdown"
+    "Markdown",
+    "file",
+    "module"
   ],
   "type": "commonjs",
   "engines": {
