@@ -1,6 +1,6 @@
 {
   "name": "lu-md-links",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Extractor de links de archivos tipo Markdown",
   "main": "./index.js",
   "keywords": [

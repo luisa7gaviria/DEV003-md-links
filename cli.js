@@ -3,9 +3,9 @@ const { statsArrLinks, statusRequest } = require('./api')
 const mdLinks = require('./index')
 const colors = require('colors')
 
-const firOption = process.argv[1]
-const secOption = process.argv[2] 
-const thrOption = process.argv[3]
+const firOption = process.argv[2]
+const secOption = process.argv[3] 
+const thrOption = process.argv[4]
 
 colors.setTheme({
     error: ['yellow', 'underline'],
